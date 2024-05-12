@@ -8,7 +8,7 @@ const Tabla = (props) => {
 
 
   return (
-    <div >
+    <div className='tab'>
       <h1 className="xd"> Tabla </h1>
       
     </div>
