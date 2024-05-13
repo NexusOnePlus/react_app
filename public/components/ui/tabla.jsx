@@ -1,70 +1,76 @@
 import { useState, useEffect } from 'react';
-import React from 'react'
-import './tabla.css'
+import React from 'react';
+import './tabla.css';
 import Grafico from './grafico';
 
-
 const Tabla = (props) => {
-  let variables = props.variables;
-  let restricciones = props.restricciones;
-  const [inputFields, setInputFields] = useState([]);
+  let varia = parseInt(props.variables) + 2;
+  let what = parseInt(props.restricciones) + 1;
+  // const [funcionObjetivo, setFuncionObjetivo] = useState('');
+  const [variablesRestricciones, setVariablesRestricciones] = useState([]);
 
   useEffect(() => {
-    setInputFields(Array.from({ length: restricciones }, () => ({ value: '' })));
-  }, [restricciones]);
+    setVariablesRestricciones(Array.from({ length: what }, () => Array.from({ length: varia }, () => '')));
+  }, [props.variables, props.restricciones]);
 
-  // Function to update the value of an input field
-  const handleValueChange = (index, event) => {
-    const values = [...inputFields];
-    values[index].value = event.target.value;
-    setInputFields(values);
+  // const handleFuncionObjetivoChange = (event) => {
+  //   setFuncionObjetivo(event.target.value);
+  // };
+
+  const handleVariableChange = (rowIndex, colIndex, event) => {
+    const newVariablesRestricciones = [...variablesRestricciones];
+    newVariablesRestricciones[rowIndex][colIndex] = event.target.value;
+    setVariablesRestricciones(newVariablesRestricciones);
   };
-  const [inputs, setInputs] = useState({ objetivo: '' });
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputs(prevInputs => ({
-      ...prevInputs,
-      [name]: value
-    }));
-  };
+
   return (
     <div className='tab'>
       <div className='Tabla'>
         <h1 className="xd"> PLANTEAMIENTO </h1>
         <div>
-          <div className='cajas'>
+          {/* <div className='cajas'>
             <h1 className='sub2'> Funcion Objetivo</h1>
             <div className='input-box'>
               <input
                 type="text"
                 placeholder="Z = X1 + X2"
-                name='objetivo'
-                value={inputs.objetivo}
-                onChange={handleChange}
+                value={funcionObjetivo}
+                onChange={handleFuncionObjetivoChange}
               />
             </div>
-          </div>
+          </div> */}
 
-          {
-            inputFields.map((inputField, index) => (
-              <div className="input-what" key={index}>
-                <h1 className='sub2'> Restriccion {index + 1} </h1>
-                <input
-                  type="text"
-                  placeholder="X1 + X2 >= N"
-                  value={inputField.value}
-                  onChange={(e) => handleValueChange(index, e)}
-                />
+          {variablesRestricciones.map((variablesRestriccion, rowIndex) => (
+            <div className="input-what" key={rowIndex}>
+              <h1 className='sub2'>
+                {rowIndex === 0 ? "Funcion Objetiva" : `Restriccion ${rowIndex}`}
+              </h1 >
+              <div  >
+                {variablesRestriccion.map((variable, colIndex) => (
+                  <div className="cajitas">
+                     <span className="input-title">
+                      {colIndex === variablesRestriccion.length - 1 ? "Valor: " : (colIndex === variablesRestriccion.length - 2 ? "Signo:" : `X${colIndex + 1}: `)}
+                    </span>
+                    <input
+                      key={colIndex}
+                      type="text"
+                      placeholder='_____________________'
+                      // placeholder={colIndex === variablesRestriccion.length - 1 ? "Valor" : (colIndex === variablesRestriccion.length - 2 ? "<=,>=,=" : `X${colIndex + 1}`)}
+                      value={variable}
+                      onChange={(e) => handleVariableChange(rowIndex, colIndex, e)}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-
+            </div>
+          ))}
         </div>
       </div>
       <div>
         <Grafico />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Tabla
+export default Tabla;
