@@ -1,15 +1,21 @@
 .tab{
-    width: 420px;
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+    grid-column-gap: 30px;
+    width: 840px;
     background: rgb(54, 47, 47);
     color: rgb(233, 243, 244);
     border-radius: 10px;
-    padding: 30px 40px;
+    
     margin-left: 10px;
     margin-right: 10px;
 }
 .xd {
-    color: rgb(18, 235, 221);
+    color: rgb(222, 230, 229);
     text-align: center;
+}
+.Tabla {
+    padding: 30px 40px;
 }
 .sub2 {
     font-size: 21px;

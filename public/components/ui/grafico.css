@@ -1,11 +1,9 @@
 .grafico {
-    width: 420px;
+    /* width: 420px; */
     background: rgb(54, 47, 47);
     color: rgb(233, 243, 244);
     border-radius: 10px;
     padding: 30px 40px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 .grafico .titulograf {

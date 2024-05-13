@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Tabla from './tabla';
-import Grafico from './grafico';
 import './espacios.css'
 
 const Espacios = () => {
@@ -45,7 +44,7 @@ const Espacios = () => {
             </div >
             <div className='segunda'>
                 <Tabla variables={inputs.variables} restricciones={inputs.restricciones} />
-                <Grafico />
+                
             </div>
         </div >
     );
