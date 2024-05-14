@@ -6,29 +6,43 @@ import "mafs/font.css";
 import { Mafs, Coordinates, Text, Plot, Theme } from "mafs";
 
 
-function InequalityExample() {
+function InequalityExample(matriz) {
+  console.log(matriz)
+  if (!matriz || !matriz[0] || matriz[0].length === 0) {
+    console.error("La matriz está vacía o el primer elemento no está definido")
+    return (
+      <Mafs height={300}
+        zoom={true}>
+        <Coordinates.Cartesian />
+      </Mafs>
+    )
+  }
+  // a = matriz[0][0]
   return (
     <Mafs height={300}
       zoom={true}>
       <Coordinates.Cartesian />
       <Plot.Inequality
-        x={({ "<=": ( y) => (3 - 3 * y + 2*y),
-        ">": (y) => Math.sin(y - y) + y,
-
-        })}// Aquí convertimos la ecuación a una función de y
+        y={({ "<=": (x,y) => (12 - 3*x)/2,
+        "<=": (x) => (8 - x)/2,
+        ">=": 0,
+        })}
         color={Theme.blue}
       />
+    
+
     </Mafs>
   )
 }
 
 
-const Grafico = () => {
+const Grafico = (props) => {
+  let matriz = props.matriz;
   return (
     <div className='grafico'>
       <h1 className='titulograf'>GRAFICO</h1>
       <div className='aqui'>
-        {InequalityExample()}
+        {InequalityExample(matriz)}
       </div>
     </div>
   )
