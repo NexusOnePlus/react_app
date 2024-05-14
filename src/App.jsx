@@ -1,6 +1,7 @@
 import "./App.css";
 import Espacios from '../public/components/ui/espacios';
 import Menu from '../public/components/ui/header';
+import Proceso from '../public/components/ui/proceso';
 function App() {
   return (
 
@@ -9,6 +10,7 @@ function App() {
       <div className="App">
         <Espacios />
       </div>
+        < Proceso />
     </div>
   );
 }

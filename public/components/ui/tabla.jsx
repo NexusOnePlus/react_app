@@ -22,7 +22,7 @@ const Tabla = (props) => {
     <div className='tab'>
       <div className='Tabla'>
         <h1 className="xd"> PLANTEAMIENTO </h1>
-        <div>
+        <div className='tablitas'>
           {variablesRestricciones.map((variablesRestriccion, rowIndex) => (
             <div className="input-what" key={rowIndex}>
               <h1 className='sub2'>
@@ -49,10 +49,10 @@ const Tabla = (props) => {
           ))}
         </div>
       </div>
-      <div>{
+      {/* <div>{
         varia === 4 ? <Grafico matriz={variablesRestricciones} /> : ''  
       }
-      </div>
+      </div> */}
     </div>
   );
 };

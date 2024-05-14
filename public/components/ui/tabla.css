@@ -1,6 +1,6 @@
 .tab{
     display: grid;
-    grid-template-columns:  1fr 1fr;
+    /* grid-template-columns:  1fr 1f; */
     grid-column-gap: 30px;
     width: 840px;
     background: rgb(54, 47, 47);
@@ -13,6 +13,11 @@
 .xd {
     color: rgb(222, 230, 229);
     text-align: center;
+}
+.tablitas {
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+    grid-column-gap: 30px;  
 }
 .Tabla {
     padding: 30px 40px;
