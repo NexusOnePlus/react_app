@@ -18,6 +18,8 @@ const Tabla = (props) => {
   const handleVariableChange = (rowIndex, colIndex, event) => {
     const newVariablesRestricciones = [...variablesRestricciones];
     newVariablesRestricciones[rowIndex][colIndex] = event.target.value;
+    newVariablesRestricciones[0][varia - 1] = 0;
+    newVariablesRestricciones[0][varia - 2] = '=';
     setVariablesRestricciones(newVariablesRestricciones);
     setMatrix(newVariablesRestricciones);
   };
@@ -35,7 +37,7 @@ const Tabla = (props) => {
               </h1 >
               <div  >
                 {variablesRestriccion.map((variable, colIndex) => (
-                  <div className="cajitas">
+                  <div key={colIndex} className="cajitas">
                     <span className="input-title">
                       {colIndex === variablesRestriccion.length - 1 ? "Valor: " : (colIndex === variablesRestriccion.length - 2 ? "Signo:" : `X${colIndex + 1}: `)}
                     </span>
