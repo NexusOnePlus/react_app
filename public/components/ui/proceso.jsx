@@ -18,9 +18,24 @@ const Tablitas = ({ matrix }) => {
 
 const operaciones = (nuevo, signos, matrix) => {
   const pasos = [];
-  console.log(nuevo)
-  return [matrix];
-}
+  console.log(nuevo);
+  let holguras = nuevo.length;
+  
+  // let identidad = Array.from({ length: holguras }, () => Array.from({ length: holguras }, () => 0));
+  let identidad = Array.from({ length: holguras }, (_, i) => 
+    Array.from({ length: holguras - 1}, (_, j) => i === 0 ? 0 :(i-1 === j ? 1 : 0))
+  );
+  console.log(identidad)
+  let nuevoConIdentidad = nuevo.map((fila, i) => fila.concat(identidad[i]));
+  console.log(holguras)
+  nuevo.map((row, rowIndex) => {
+    row.map((cell, cellIndex) => {
+      if (cell !== 0) {
+      }
+    });
+  })
+  return [nuevoConIdentidad, matrix];
+};
 
 const Proceso = () => {
   const { matrix } = useContext(MatrixContext);
@@ -31,7 +46,7 @@ const Proceso = () => {
   const modifyMatrix = (matrix) => {
     const newMatrix = [];
     const newSignos = [];
-    
+
     matrix.forEach(row => {
       const newRow = row.slice(0, -2).concat(row.slice(-1)).map(cell => {
         const parsed = parseInt(cell, 10);
@@ -40,20 +55,22 @@ const Proceso = () => {
       newMatrix.push(newRow);
       newSignos.push(row[row.length - 2]); 
     });
-  
+
     setSignos(newSignos);
-    return newMatrix;
+    setNuevo(newMatrix);
   };
-  
 
   useEffect(() => {
     if (matrix.length > 0) {
-      const modifiedMatrix =  modifyMatrix(matrix);
-      // setMatrices([modifiedMatrix, ...matrices]);
-      setNuevo(modifiedMatrix);
-      setMatrices(operaciones(nuevo, signos, matrix));
+      modifyMatrix(matrix);
     }
   }, [matrix]);
+
+  useEffect(() => {
+    if (nuevo.length > 0 && signos.length > 0) {
+      setMatrices(operaciones(nuevo, signos, matrix));
+    }
+  }, [nuevo, signos, matrix]);
 
   return (
     <div className="proceso">
