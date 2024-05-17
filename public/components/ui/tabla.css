@@ -1,6 +1,5 @@
 .tab{
     display: grid;
-    /* grid-template-columns:  1fr 1f; */
     grid-column-gap: 30px;
     width: 840px;
     background: rgb(54, 47, 47);
@@ -54,5 +53,4 @@
     outline: none;
     font-size: 16px;
     color: #040101;
-    /* border-bottom: 1px solid rgba(49, 55, 55, 0.523); */
 }

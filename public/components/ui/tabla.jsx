@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
-import {MatrixContext} from '../ui/context';
+import { MatrixContext } from '../ui/context';
 import './tabla.css';
-import Grafico from './grafico';
 
 const Tabla = (props) => {
   let varia = parseInt(props.variables) + 2;
   let what = parseInt(props.restricciones) + 1;
   const [variablesRestricciones, setVariablesRestricciones] = useState([]);
-  const { setMatrix} = useContext(MatrixContext);
+  const { setMatrix } = useContext(MatrixContext);
 
   useEffect(() => {
     setVariablesRestricciones(Array.from({ length: what }, () => Array.from({ length: varia }, () => '')));
@@ -33,7 +32,6 @@ const Tabla = (props) => {
             <div className="input-what" key={rowIndex}>
               <h1 className='sub2'>
                 {rowIndex === 0 ? "Funcion Objetiva (Z ... = 0)" : `Restriccion ${rowIndex}`}
-                {/* {rowIndex === 0 ? (<h6>En funcion a Z ... = 0</h6>) : null} */}
               </h1 >
               <div  >
                 {variablesRestriccion.map((variable, colIndex) => (
@@ -41,7 +39,7 @@ const Tabla = (props) => {
                     <span className="input-title">
                       {colIndex === variablesRestriccion.length - 1 ? "Valor: " : (colIndex === variablesRestriccion.length - 2 ? "Signo:" : `X${colIndex + 1}: `)}
                     </span>
-                    <input 
+                    <input
                       key={colIndex}
                       type="text"
                       placeholder='_____________________'
@@ -55,10 +53,6 @@ const Tabla = (props) => {
           ))}
         </div>
       </div>
-      {/* <div>{
-        varia === 4 ? <Grafico matriz={variablesRestricciones} /> : ''  
-      }
-      </div> */}
     </div>
   );
 };
