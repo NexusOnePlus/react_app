@@ -16,10 +16,10 @@ const Tablitas = ({ matrix }) => {
   );
 };
 
-const operaciones = (nuevo, signos) => {
+const operaciones = (nuevo, signos, matrix) => {
   const pasos = [];
   console.log(nuevo)
-  return [nuevo];
+  return [matrix];
 }
 
 const Proceso = () => {
@@ -35,23 +35,23 @@ const Proceso = () => {
     matrix.forEach(row => {
       const newRow = row.slice(0, -2).concat(row.slice(-1)).map(cell => {
         const parsed = parseInt(cell, 10);
-        return isNaN(parsed) ? cell : parsed;
+        return isNaN(parsed) ?  0 : parsed;
       });
       newMatrix.push(newRow);
       newSignos.push(row[row.length - 2]); 
     });
   
     setSignos(newSignos);
-    return matrix;
+    return newMatrix;
   };
   
 
   useEffect(() => {
     if (matrix.length > 0) {
-      const modifiedMatrix = modifyMatrix(matrix);
+      const modifiedMatrix =  modifyMatrix(matrix);
       // setMatrices([modifiedMatrix, ...matrices]);
       setNuevo(modifiedMatrix);
-      setMatrices(operaciones(nuevo, signos));
+      setMatrices(operaciones(nuevo, signos, matrix));
     }
   }, [matrix]);
 
