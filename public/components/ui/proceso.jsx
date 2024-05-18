@@ -36,7 +36,6 @@ const operaciones = (nuevo, signos, matrix) => {
   let pivote, pivot;
        for (let j = 0, i = 0, valor = Infinity; j < nuevoConIdentidad[i].length; j++) {
         if (nuevoConIdentidad[i][j] < valor) {
-          // console.log(j, "  ",   nuevoConIdentidad[i][j])
           valor = nuevoConIdentidad[i][j];
           pivote = j;
         }
@@ -44,21 +43,34 @@ const operaciones = (nuevo, signos, matrix) => {
       //  console.log("pivote columna" , pivote);
        for (let i = 1, j = pivote, valor = Infinity; i < nuevoConIdentidad.length; i++) {
         // console.log("division", nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j])
+        // console.log("ite", i, "i", j, "j", nuevoConIdentidad[i][j])
             if (nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j] < valor && nuevoConIdentidad[i][j] != 0) {
               valor = nuevoConIdentidad[i][j];
               pivot = i;
             }           
        }
-  let realpivot = nuevoConIdentidad[pivot];
-  // console.log(realpivot)
-  // for (let i = 0; i < nuevoConIdentidad.length; i++) {
-  //     if(nuevoConIdentidad[i][pivote] < 0 && i !== pivot){
-  //         for (let j = 0; j < nuevoConIdentidad[i].length; j++) {
-  //             nuevoConIdentidad[i][j] = nuevoConIdentidad[i][j] / realpivot[pivote];
-  //         }
-  //     }
-  // }
-  return [nuevoConIdentidad, matrix];
+       if (pivot == undefined) {
+        pivot = 1;
+       }
+  pasos.push(structuredClone(nuevoConIdentidad));
+  let realpivot = [... nuevoConIdentidad[pivot]];
+  // console.log("antes", realpivot)
+
+  // console.log("tamaño", nuevoConIdentidad[pivot].length)
+  for (let i = 0; i < nuevoConIdentidad[pivot].length; i++) {
+    nuevoConIdentidad[pivot][i] =  nuevoConIdentidad[pivot][i]/realpivot[pivote];
+  }
+  pasos.push(structuredClone(nuevoConIdentidad));
+  // console.log("despues", nuevoConIdentidad[pivot])
+  realpivot = [... nuevoConIdentidad[pivot]];
+  let sumaresta = nuevoConIdentidad[0][pivote]*-1;
+  for (let i = 0; i < nuevoConIdentidad[0].length; i++) {
+    nuevoConIdentidad[0][i] =  nuevoConIdentidad[0][i]+realpivot[i]*(sumaresta);
+  }
+  pasos.push(structuredClone(nuevoConIdentidad));
+  // console.log("despues si", realpivot)
+  pasos.push(matrix);
+  return pasos;
 };
 
 const Proceso = () => {

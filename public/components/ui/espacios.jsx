@@ -4,7 +4,7 @@ import './espacios.css'
 
 const Espacios = () => {
     const [variables, setVariables] = useState(2);
-    const [restricciones, setRestricciones] = useState(1);
+    const [restricciones, setRestricciones] = useState(2);
 
     const handleVariables = (value) => {
         if (variables + value >= 2) {
@@ -12,7 +12,7 @@ const Espacios = () => {
         }
     };
     const handleRestricciones = (value) => {
-        if (restricciones + value >= 1) {
+        if (restricciones + value >= 2) {
             setRestricciones(restricciones + value);
         }
     };
