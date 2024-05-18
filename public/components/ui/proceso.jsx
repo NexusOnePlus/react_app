@@ -18,22 +18,46 @@ const Tablitas = ({ matrix }) => {
 
 const operaciones = (nuevo, signos, matrix) => {
   const pasos = [];
-  console.log(nuevo);
   let holguras = nuevo.length;
-  
+
   // let identidad = Array.from({ length: holguras }, () => Array.from({ length: holguras }, () => 0));
-  let identidad = Array.from({ length: holguras }, (_, i) => 
-    Array.from({ length: holguras - 1}, (_, j) => i === 0 ? 0 :(i-1 === j ? 1 : 0))
+  let identidad = Array.from({ length: holguras }, (_, i) =>
+    Array.from({ length: holguras - 1 }, (_, j) => i === 0 ? 0 : (i - 1 === j ? 1 : 0))
   );
-  console.log(identidad)
-  let nuevoConIdentidad = nuevo.map((fila, i) => fila.concat(identidad[i]));
-  console.log(holguras)
-  nuevo.map((row, rowIndex) => {
-    row.map((cell, cellIndex) => {
-      if (cell !== 0) {
-      }
-    });
-  })
+  let nuevoConIdentidad = nuevo.map((fila, i) => {
+    let colita = fila[fila.length - 1];
+    // console.log("colita", colita)
+    let nuevafila = fila.slice(0, -1);
+    nuevafila = nuevafila.concat(identidad[i]);
+    nuevafila.push(colita)
+    return nuevafila;
+  });
+
+  let pivote, pivot;
+       for (let j = 0, i = 0, valor = Infinity; j < nuevoConIdentidad[i].length; j++) {
+        if (nuevoConIdentidad[i][j] < valor) {
+          // console.log(j, "  ",   nuevoConIdentidad[i][j])
+          valor = nuevoConIdentidad[i][j];
+          pivote = j;
+        }
+       }
+      //  console.log("pivote columna" , pivote);
+       for (let i = 1, j = pivote, valor = Infinity; i < nuevoConIdentidad.length; i++) {
+        // console.log("division", nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j])
+            if (nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j] < valor && nuevoConIdentidad[i][j] != 0) {
+              valor = nuevoConIdentidad[i][j];
+              pivot = i;
+            }           
+       }
+  let realpivot = nuevoConIdentidad[pivot];
+  // console.log(realpivot)
+  // for (let i = 0; i < nuevoConIdentidad.length; i++) {
+  //     if(nuevoConIdentidad[i][pivote] < 0 && i !== pivot){
+  //         for (let j = 0; j < nuevoConIdentidad[i].length; j++) {
+  //             nuevoConIdentidad[i][j] = nuevoConIdentidad[i][j] / realpivot[pivote];
+  //         }
+  //     }
+  // }
   return [nuevoConIdentidad, matrix];
 };
 
@@ -50,10 +74,10 @@ const Proceso = () => {
     matrix.forEach(row => {
       const newRow = row.slice(0, -2).concat(row.slice(-1)).map(cell => {
         const parsed = parseInt(cell, 10);
-        return isNaN(parsed) ?  0 : parsed;
+        return isNaN(parsed) ? 0 : parsed;
       });
       newMatrix.push(newRow);
-      newSignos.push(row[row.length - 2]); 
+      newSignos.push(row[row.length - 2]);
     });
 
     setSignos(newSignos);
