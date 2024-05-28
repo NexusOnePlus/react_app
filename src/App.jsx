@@ -8,10 +8,6 @@ function App() {
     <MatrixProvider>
     <div>
       <Menu />
-      <div className="App">
-        <Espacios />
-      </div>
-        < Proceso />
     </div>
     </MatrixProvider>
   );

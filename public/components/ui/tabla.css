@@ -1,13 +1,14 @@
 .tab{
     display: grid;
     grid-column-gap: 30px;
-    width: 840px;
+    width: 800px;
     background: rgb(54, 47, 47);
     color: rgb(233, 243, 244);
     border-radius: 10px;
-    
+    height: 485px;
     margin-left: 10px;
     margin-right: 10px;
+    overflow: auto;
 }
 .xd {
     color: rgb(222, 230, 229);
@@ -17,6 +18,7 @@
     display: grid;
     grid-template-columns:  1fr 1fr;
     grid-column-gap: 30px;  
+   
 }
 .Tabla {
     padding: 30px 40px;

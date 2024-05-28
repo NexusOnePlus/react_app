@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Tabla from './tabla';
+import { useLocalStorage } from "./localstorage";
 import './espacios.css'
 
 const Espacios = () => {
-    const [variables, setVariables] = useState(2);
-    const [restricciones, setRestricciones] = useState(2);
+    const [variables, setVariables] = useLocalStorage('variables', 2)
+    const [restricciones, setRestricciones] = useLocalStorage('restricciones',2)
+ 
 
     const handleVariables = (value) => {
         if (variables + value >= 2) {
