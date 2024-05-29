@@ -136,7 +136,7 @@ const Proceso = () => {
 
   return (
     <div className="proceso">
-      <h1 className="titu">SOLUCION</h1>
+      <h1 className="titu">SOLUCION SIMPLEX</h1>
       <div className="matrices">
         {matrices.length > 0 ? (
           matrices.map((mat, index) => (

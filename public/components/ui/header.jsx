@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Espacios from './espacios'
 import Tablitas from "./proceso"
+import Dual from "./Dual"
 import './header.css'
 const Menu = () => {
   return (
@@ -10,6 +11,7 @@ const Menu = () => {
         <Routes>
           <Route path="/" element={<Espacios />}/>
           <Route path='/Simplex' element={<Tablitas />}/>
+          <Route path='/Dual' element={<Dual/>}/>
         </Routes>
         <div className='Barraza'>
           <nav className='barra'>
@@ -19,16 +21,16 @@ const Menu = () => {
             <Link to='/Simplex' >
               Simplex
             </Link>
-            <Link to='#' >
+            <Link to='/Grafico' >
               Gráfico
             </Link>
-            <Link to='#' >
+            <Link to='/Dual' >
               Dual
             </Link>
-            <Link to='#' >
+            <Link to='/Gran_M' >
               Gran M
             </Link>
-            <Link>
+            <Link to='/Dos_Fases'>
               Dos Fases
             </Link>
             <span></span>
