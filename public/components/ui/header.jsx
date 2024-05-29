@@ -33,7 +33,7 @@ const Menu = () => {
             <Link to='/Dos_Fases'>
               Dos Fases
             </Link>
-            <span></span>
+            <div className="animation start-home"></div>
           </nav>
         </div>
       </BrowserRouter>

@@ -32,5 +32,58 @@ nav a {
     font-weight: 500;
     color: #fff;
     text-decoration: none;
-    padding: 0 23px;
+    padding: 0 20px;
+}
+
+
+nav .animation {
+    position: absolute;
+    height: 5px; 
+    bottom: 0;
+    z-index: 0;
+    background: #ffffff;
+    border-radius: 8px;
+    transition: all .5s ease 0s;
+}
+a:nth-child(1){
+    width: 88.69px;
+}
+nav .start-home, a:nth-child(1):hover~.animation{
+    width: 88.69px;
+    left: 2px;
+}
+a:nth-child(2){
+    width: 102.91px;
+}
+nav .start-Simplex, a:nth-child(2):hover~.animation{
+    width: 102.91px;
+    left: 90.69px;
+}
+a:nth-child(3){
+    width: 97.58px;
+}
+nav .start-Grafico, a:nth-child(3):hover~.animation{
+    width: 97.58px;
+    left: 193.6px;
+}
+a:nth-child(4){
+    width: 78.91px;
+}
+nav .start-Dual, a:nth-child(4):hover~.animation{
+    width: 78.91px;
+    left: 295.18px;
+}
+a:nth-child(5){
+    width: 99.35px;
+}
+nav .start-Gran_M, a:nth-child(5):hover~.animation{
+    width: 99.35px;
+    left: 376.09px;
+}
+a:nth-child(6){
+    width: 122.48px;
+}
+nav .start-Dos_Fases, a:nth-child(6):hover~.animation{
+    width: 122.48px;
+    left: 470.52px;
 }
