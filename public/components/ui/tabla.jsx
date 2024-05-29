@@ -1,16 +1,22 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import { useLocalStorage } from "./localstorage";
 import { MatrixContext } from '../ui/context';
 import './tabla.css';
 
 const Tabla = (props) => {
   let varia = parseInt(props.variables) + 2;
   let what = parseInt(props.restricciones) + 1;
-  const [variablesRestricciones, setVariablesRestricciones] = useState([]);
+  const [variablesRestricciones, setVariablesRestricciones] = useLocalStorage('variablesRestricciones',Array.from({ length: what }, () => Array.from({ length: varia }, () => '')));
+  
   const { setMatrix } = useContext(MatrixContext);
 
   useEffect(() => {
-    setVariablesRestricciones(Array.from({ length: what }, () => Array.from({ length: varia }, () => '')));
+    console.log(variablesRestricciones[0].length)
+    console.log(varia)
+    if (variablesRestricciones.length != what || variablesRestricciones[0].length != varia){
+      setVariablesRestricciones(Array.from ({ length: what }, () => Array.from({ length: varia }, () => '')));
+    }
     setMatrix(variablesRestricciones)
   }, [props.variables, props.restricciones]);
 

@@ -59,7 +59,6 @@ const operacionesDual = (nuevo, signos, matrix) => {
           }
         }
       }
-
       if (pivote !== undefined) {
         let realpivot = [...nuevoConIdentidad[pivot]];
         nuevoConIdentidad[pivot] = nuevoConIdentidad[pivot].map(cell => parseFloat((cell / realpivot[pivote]).toFixed(2)));
@@ -71,6 +70,7 @@ const operacionesDual = (nuevo, signos, matrix) => {
             let coef = nuevoConIdentidad[i][pivote];
             for (let j = 0; j < nuevoConIdentidad[i].length; j++) {
               nuevoConIdentidad[i][j] -= coef * realpivot[j];
+              nuevoConIdentidad[i][j] = nuevoConIdentidad[i][j].toFixed(2);
             }
           }
         }

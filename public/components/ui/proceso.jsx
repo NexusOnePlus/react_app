@@ -55,6 +55,7 @@ const operaciones = (nuevo, signos, matrix) => {
         console.log("valor", nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1])
         if ((nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1] / nuevoConIdentidad[i][j]) < valor && nuevoConIdentidad[i][j] != 0) {
           valor = (nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j]);
+          valor = valor.toFixed(2);
           pivot = i;
         }
       }
@@ -63,9 +64,7 @@ const operaciones = (nuevo, signos, matrix) => {
         // reduciendo a 1 la fila pivot
         for (let i = 0; i < nuevoConIdentidad[pivot].length; i++) {
           nuevoConIdentidad[pivot][i] = (nuevoConIdentidad[pivot][i] / realpivot[pivote]);
-          if (!Number.isInteger(nuevoConIdentidad[pivot][i])) {
-            nuevoConIdentidad[pivot][i] = Math.floor(nuevoConIdentidad[pivot][i] * 100) / 100;
-          }
+          nuevoConIdentidad[pivot][i] = nuevoConIdentidad[pivot][i].toFixed(2);
         }
         pasos.push(structuredClone(nuevoConIdentidad));
 
