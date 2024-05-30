@@ -3,6 +3,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Espacios from './espacios'
 import Tablitas from "./proceso"
 import Dual from "./Dual"
+import Grafico from "./grafico"
 import './header.css'
 const Menu = () => {
   const [gps, setGps] = useState('home')
@@ -14,6 +15,7 @@ const Menu = () => {
           <Route path="/" element={<Espacios />}/>
           <Route path='/Simplex' element={<Tablitas />}/>
           <Route path='/Dual' element={<Dual/>}/>
+          <Route path='/Grafico' element={<Grafico/>}/>
         </Routes>
         <div className='Barraza'>
           <nav className='barra'>

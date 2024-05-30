@@ -1,48 +1,53 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react';
 import './grafico.css'
-import "mafs/core.css";
-import "mafs/font.css";
+import { MatrixContext } from '../ui/context';
+import functionPlot from "function-plot";
 
-import { Mafs, Coordinates, Text, Plot, Theme } from "mafs";
+function parseExpression([operand1, operand2, operator, result]) {
+  // Rellenar con 0 si faltan valores
+  operand1 = operand1 || '0';
+  operand2 = operand2 || '0';
+  result = result || '0';
 
-
-function InequalityExample(matriz) {
-  console.log(matriz)
-  if (!matriz || !matriz[0] || matriz[0].length === 0) {
-    console.error("La matriz está vacía o el primer elemento no está definido")
-    return (
-      <Mafs height={300}
-        zoom={true}>
-        <Coordinates.Cartesian />
-      </Mafs>
-    )
+  let signos = ['<=','<','>','>=']
+  // Construir la expresión
+  if (signos.includes(operator)) {
+    return `(${result} - ${operand1} * x) / ${operand2}`; // Expresión para inecuación
+  } else {  
+    return null; // Ignorar si no hay un operador válido
   }
-  // a = matriz[0][0]
-  return (
-    <Mafs height={300}
-      zoom={true}>
-      <Coordinates.Cartesian />
-      <Plot.Inequality
-        y={({ "<=": (x,y) => (12 - 3*x)/2,
-        "<=": (x) => (8 - x)/2,
-        ">=": 0,
-        })}
-        color={Theme.blue}
-      />
-    
-
-    </Mafs>
-  )
 }
 
 
-const Grafico = (props) => {
-  let matriz = props.matriz;
+function trazando(matriz) {
+  console.log(matriz)
+  let funciones = matriz.map(parseExpression).filter(Boolean)
+  console.log(funciones)
+  const data = funciones.map((fn) => ({ 
+    fn
+  }))
+  /*
+  0: (4) ['2', '32', '=', 0]
+  1: (4) ['2', '2', '<=', '4']
+  2: (4) ['24', '24', '<=', '420']
+  */
+  
+  
+  functionPlot({
+    target: '#aqui',
+    // grid: true,
+    data
+  })
+}
+
+
+const Grafico = () => {
+  const { matrix } = useContext(MatrixContext);
+  useEffect(() => {trazando(matrix)}, [matrix]);
   return (
     <div className='grafico'>
       <h1 className='titulograf'>GRAFICO</h1>
-      <div className='aqui'>
-        {InequalityExample(matriz)}
+      <div id='aqui'>
       </div>
     </div>
   )
