@@ -2,7 +2,10 @@
     display: grid;
     grid-column-gap: 30px;
     width: 800px;
-    background: rgb(54, 47, 47);
+    /* background: rgb(54, 47, 47); */
+    background: linear-gradient(135deg, #22202053, #17141483);
+    border: 2px solid #6c65774d;
+    backdrop-filter: blur(10px);
     color: rgb(233, 243, 244);
     border-radius: 10px;
     height: 485px;
@@ -26,11 +29,12 @@
 .sub2 {
     font-size: 21px;
     margin: 10px 0px;
+    color: #000
 }
 
  .cajas {
     color: black;
-    background-color: rgb(243, 231, 231);
+    background-color: rgb(126, 88, 88);
     border-radius: 10px;
     padding: 20px 20px;
     margin: 20px 0px;

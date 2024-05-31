@@ -15,9 +15,11 @@
 body{
     font-family: 'Poppins', sans-serif;
     display: grid;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     min-height: 100vh;
-    background: rgb(31, 28, 28);
+    /* background: rgb(20, 20, 20); */
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(34,33,68,1) 25%, rgba(40,21,55,1) 83%);    
 }
 

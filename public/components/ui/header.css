@@ -9,16 +9,20 @@
     box-sizing: border-box;
     display: grid;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 50px;
     min-height: 10vh;
     align-items: center;
+    /* background: rgb(24, 25, 24); */
 }
 
 nav {
     position: relative;
     width: 600px;
     height: 50px;
-    background: #222;
+    /* background: #222; */
+    background: linear-gradient(135deg, #22202053, #17141483);
+    border: 2px solid #6c65774d;
+    backdrop-filter: blur(10px);
     border-radius: 8px;
     display: flex;
     justify-content: center;
