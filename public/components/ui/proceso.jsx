@@ -19,7 +19,12 @@ const Tablitas = ({ matrix }) => {
 const operaciones = (nuevo, signos, matrix) => {
   const pasos = [];
   let holguras = nuevo.length;
-
+  nuevo = nuevo.map((fila, index) => {
+    if (index === 0) {
+      return fila;
+    }
+      return fila.map((e) => (e >= 0 ? e : Math.abs(e)));
+  });
   // let identidad = Array.from({ length: holguras }, () => Array.from({ length: holguras }, () => 0));
   let identidad = Array.from({ length: holguras }, (_, i) =>
     Array.from({ length: holguras - 1 }, (_, j) => i === 0 ? 0 : (i - 1 === j ? 1 : 0))
