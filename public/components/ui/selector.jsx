@@ -4,6 +4,7 @@ import Setup from './setup'
 import Simplex from "../simplex/simplex"
 import Dual from "../dual/Dual"
 import Grafico from "../grafico/grafico"
+import M from "../M/M"
 import './selector.css'
 const Menu = () => {
   const [gps, setGps] = useState('home')
@@ -16,6 +17,7 @@ const Menu = () => {
           <Route path='/Simplex' element={<Simplex />}/>
           <Route path='/Dual' element={<Dual/>}/>
           <Route path='/Grafico' element={<Grafico/>}/>
+          <Route path='/Gran_M' element={<M/>}/>
         </Routes>
         <div className='Links'>
           <nav>
