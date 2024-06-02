@@ -1,24 +1,24 @@
 import React, {useState} from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import Espacios from './espacios'
-import Tablitas from "./proceso"
-import Dual from "./Dual"
-import Grafico from "./grafico"
-import './header.css'
+import Setup from './setup'
+import Simplex from "../simplex/simplex"
+import Dual from "../dual/Dual"
+import Grafico from "../grafico/grafico"
+import './selector.css'
 const Menu = () => {
   const [gps, setGps] = useState('home')
 
   return (
-    <div className='principal'>
+    <div className='espacio'>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Espacios />}/>
-          <Route path='/Simplex' element={<Tablitas />}/>
+          <Route path="/" element={<Setup />}/>
+          <Route path='/Simplex' element={<Simplex />}/>
           <Route path='/Dual' element={<Dual/>}/>
           <Route path='/Grafico' element={<Grafico/>}/>
         </Routes>
-        <div className='Barraza'>
-          <nav className='barra'>
+        <div className='Links'>
+          <nav>
             <Link to='/' onClick={() => setGps('home')} >
               Home
             </Link>

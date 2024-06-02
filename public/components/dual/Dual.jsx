@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import './proceso.css';
-import { MatrixContext } from '../ui/context';
+import { MatrixContext } from '../context/context';
+import '../dual/Dual.css';
 
 // Componente Tablitas
 const Tablitas = ({ matrix }) => {
   return (
-    <div className="nomatrices">
+    <div className="pasos">
       {matrix.map((row, rowIndex) => (
         <div className='matrix-table' key={rowIndex}>
           {row.map((cell, cellIndex) => (

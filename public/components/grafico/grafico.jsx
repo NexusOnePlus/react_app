@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './grafico.css'
-import { MatrixContext } from '../ui/context';
+import { MatrixContext } from '../context/context';
 import functionPlot from "function-plot";
 
 function parseExpression([operand1, operand2, operator, result]) {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import Tabla from './tabla';
-import { useLocalStorage } from "./localstorage";
-import './espacios.css'
+import React from 'react'
+import Planteamiento from './planteamiento';
+import { useLocalStorage } from "../context/localstorage";
+import './setup.css'
 
-const Espacios = () => {
+const Setup = () => {
     const [variables, setVariables] = useLocalStorage('variables', 2)
     const [restricciones, setRestricciones] = useLocalStorage('restricciones',2)
  
@@ -20,8 +20,8 @@ const Espacios = () => {
     };
 
     return (
-        <div className="mayor">
-            <div className="ayuda">
+        <div className="entorno">
+            <div className="setup">
                 <h1 className='title'>SETUP </h1>
                 <div className='cajas'>
                     <h1 className='sub'> N° de variables</h1>
@@ -44,10 +44,8 @@ const Espacios = () => {
                     </div>
                 </div>
             </div>
-            <div className='segunda'>
-                <Tabla variables={variables} restricciones={restricciones} />
-            </div>
+            <Planteamiento variables={variables} restricciones={restricciones} />
         </div>
     );
 };
-export default Espacios
+export default Setup
