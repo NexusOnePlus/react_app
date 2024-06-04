@@ -2,12 +2,12 @@
     box-sizing: border-box;
 }
 
-.mayor {
+.entorno {
     display: grid;
     grid-template-columns: 1fr 2fr;
 }
 
-.ayuda {
+.setup {
     /* background: rgb(54, 47, 47); */
     background: linear-gradient(135deg, #22202053, #17141483);
     border: 2px solid #6c65774d;
@@ -19,22 +19,18 @@
     margin-right: 10px;
 }
 
-.mayor .segunda {
-    display: grid;
-}
-
-.ayuda .title {
+.setup.title {
     font-size: 36px;
     text-align: center;
     margin: 0px 0px 40px 0px;
 }
 
-.ayuda .sub {
+.setup .sub {
     font-size: 21px;
     color: #fff;
 }
 
-.ayuda .cajas {
+.setup .cajas {
     height: 150px;
     /* background-color: rgb(243, 231, 231); */
     background: transparent;
@@ -48,7 +44,7 @@
     text-align: center;
 }
 
-.ayuda .input-box {
+.setup .input-box {
     width: 100%;
     height: 50px;
     margin: 10px 0;
@@ -76,7 +72,7 @@
     font-weight: bold;
 }
 
-.ayuda button {
+.setup button {
     width: 100%;
     height: 50px;
     /* background: rgb(177, 174, 174); */

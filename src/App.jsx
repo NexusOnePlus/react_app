@@ -1,13 +1,13 @@
 import "./App.css";
-import Menu from '../public/components/ui/header';
-import { MatrixProvider } from '../public/components/ui/context';
+import Selector from '../public/components/ui/selector';
+import { MatrixProvider } from '../public/components/context/context';
 import Titulo from "../public/components/ui/titulo"
 function App() {
   return (
     <MatrixProvider>
     <div>
       <Titulo/>
-      <Menu />
+      <Selector/>
     </div>
     </MatrixProvider>
   );

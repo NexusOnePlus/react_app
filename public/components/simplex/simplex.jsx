@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import './proceso.css';
-import { MatrixContext } from '../ui/context';
+import { MatrixContext } from '../context/context';
+import './simplex.css';
 
 const Tablitas = ({ matrix }) => {
   return (
-    <div className="nomatrices">
+    <div className="pasos">
       {matrix.map((row, rowIndex) => (
         <div className='matrix-table' key={rowIndex}>
           {row.map((cell, cellIndex) => (
@@ -31,7 +31,6 @@ const operaciones = (nuevo, signos, matrix) => {
   );
   let nuevoConIdentidad = nuevo.map((fila, i) => {
     let colita = fila[fila.length - 1];
-    // console.log("colita", colita)
     let nuevafila = fila.slice(0, -1);
     nuevafila = nuevafila.concat(identidad[i]);
     nuevafila.push(colita)
@@ -51,13 +50,7 @@ const operaciones = (nuevo, signos, matrix) => {
       break
     } else {
       //eligiendo fila pivote
-      console.log("BUSCANDO columna")
-      console.log(nuevoConIdentidad)
       for (let i = 1, j = pivote, valor = Infinity; i < nuevoConIdentidad.length; i++) {
-        console.log("ite", i, "i", j, "j", "valor actual", nuevoConIdentidad[i][j])
-        console.log("division", nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j])
-        console.log("valor", valor)
-        console.log("valor", nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1])
         if ((nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1] / nuevoConIdentidad[i][j]) < valor && nuevoConIdentidad[i][j] != 0) {
           valor = (nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j]);
           valor = valor.toFixed(2);
@@ -86,7 +79,6 @@ const operaciones = (nuevo, signos, matrix) => {
           let a = nuevoConIdentidad[i][pivote];
           if (i != pivot && nuevoConIdentidad[i][pivote] != 0) {
             for (let j = 0; j < nuevoConIdentidad[i].length; j++) {
-              // console.log("resta", nuevoConIdentidad[i][j], "xd", realpivot[j] * a)
               nuevoConIdentidad[i][j] = nuevoConIdentidad[i][j] - (realpivot[j] * a);
             }
           }
