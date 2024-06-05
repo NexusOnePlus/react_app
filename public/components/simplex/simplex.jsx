@@ -3,12 +3,24 @@ import { MatrixContext } from '../context/context';
 import './simplex.css';
 
 const Tablitas = ({ matrix }) => {
+  const formatNumber = (num) => {
+    let signos = ['<=','<','>','>=','=']
+    if (signos.includes(num)) { return num }
+    const number = parseFloat(num);
+    if (Number.isInteger(number)) {
+      return number;
+    } else {
+      return number.toFixed(2);
+    }
+    return num;
+  };
+  
   return (
     <div className="pasos">
       {matrix.map((row, rowIndex) => (
         <div className='matrix-table' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <span className="cell" key={cellIndex}>{cell } </span>
+            <span className="cell" key={cellIndex}>{ formatNumber(cell) } </span>
           ))}
         </div>
       ))}
@@ -37,6 +49,8 @@ const operaciones = (nuevo, signos, matrix) => {
     return nuevafila;
   });
   let negativos = true;
+  pasos.push(structuredClone(nuevoConIdentidad));
+
   while (negativos) {
     let pivote, pivot;
     //eligiendo columna pivote
@@ -51,18 +65,20 @@ const operaciones = (nuevo, signos, matrix) => {
     } else {
       //eligiendo fila pivote
       for (let i = 1, j = pivote, valor = Infinity; i < nuevoConIdentidad.length; i++) {
-        if ((nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1] / nuevoConIdentidad[i][j]) < valor && nuevoConIdentidad[i][j] != 0) {
+        if ((nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1] / nuevoConIdentidad[i][j]) < valor && nuevoConIdentidad[i][j] > 0) {
           valor = (nuevoConIdentidad[i][nuevoConIdentidad[i].length - 1]/nuevoConIdentidad[i][j]);
-          valor = valor.toFixed(2);
+          valor = parseFloat(valor.toFixed(2));
           pivot = i;
         }
       }
       if (pivot != undefined) {
         let realpivot = [...nuevoConIdentidad[pivot]];
         // reduciendo a 1 la fila pivot
+        if(realpivot[pivote] != 1){
         for (let i = 0; i < nuevoConIdentidad[pivot].length; i++) {
           nuevoConIdentidad[pivot][i] = (nuevoConIdentidad[pivot][i] / realpivot[pivote]);
-          nuevoConIdentidad[pivot][i] = nuevoConIdentidad[pivot][i].toFixed(2);
+          nuevoConIdentidad[pivot][i] = parseFloat(nuevoConIdentidad[pivot][i].toFixed(2));
+        }
         }
         pasos.push(structuredClone(nuevoConIdentidad));
 
@@ -87,7 +103,6 @@ const operaciones = (nuevo, signos, matrix) => {
       }else {
         negativos = false
       }
-      // pasos.push(structuredClone(nuevoConIdentidad));
     } 
   }
 
