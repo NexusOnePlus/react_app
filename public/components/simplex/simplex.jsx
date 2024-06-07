@@ -20,7 +20,7 @@ const Tablitas = ({ matrix }) => {
       {matrix.map((row, rowIndex) => (
         <div className='matrix-table' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <span className="cell" key={cellIndex}>{ cellIndex == 0 || rowIndex == 0 ? cell : formatNumber(cell)} </span>
+            <span className="cell" key={cellIndex}>{cellIndex == 0 || rowIndex == 0 ? cell : formatNumber(cell)} </span>
           ))}
         </div>
       ))}
@@ -34,16 +34,16 @@ const signal = (signos, min) => {
     return false;
   }
   let falso = false;
-    signos.forEach(
-      (signo, index) => { 
-        if (signo === '<=' && index != 0) {
-          falso = true;
-        } else {
-          falso = false;
-        }
+  signos.forEach(
+    (signo, index) => {
+      if (signo === '<=' && index != 0) {
+        falso = true;
+      } else {
+        falso = false;
       }
-    );
-  
+    }
+  );
+
   return falso;
 }
 
@@ -75,33 +75,43 @@ const tipo = (nuevo) => {
   //   )
 
   // } else {
-    let holguras = nuevo.length;
-    let identidad = Array.from({ length: holguras }, (_, i) =>
-      Array.from({ length: holguras - 1 }, (_, j) => i === 0 ? 0 : (i - 1 === j ? 1 : 0))
-    );
-    nuevoConIdentidad = nuevo.map((fila, i) => {
-      let colita = fila[fila.length - 1];
-      let nuevafila = fila.slice(0, -1);
-      nuevafila = nuevafila.concat(identidad[i]);
-      nuevafila.push(colita)
-      return nuevafila;
-    });
-    nuevoConIdentidad[0] = nuevoConIdentidad[0].map(valor => -valor);
+  let holguras = nuevo.length;
+  let identidad = Array.from({ length: holguras }, (_, i) =>
+    Array.from({ length: holguras - 1 }, (_, j) => i === 0 ? 0 : (i - 1 === j ? 1 : 0))
+  );
+  nuevoConIdentidad = nuevo.map((fila, i) => {
+    let colita = fila[fila.length - 1];
+    let nuevafila = fila.slice(0, -1);
+    nuevafila = nuevafila.concat(identidad[i]);
+    nuevafila.push(colita)
+    return nuevafila;
+  });
+  nuevoConIdentidad[0] = nuevoConIdentidad[0].map(valor => -valor);
 
-    // console.log(nuevoConIdentidad);  
+  // console.log(nuevoConIdentidad);  
   // }
 
   return nuevoConIdentidad;
 }
-
-const fomateo = (nuevoConIdentidad) => {
+let barra;
+let lado;
+const fomateo = (nuevoConIdentidad, filas, columna) => {
   let variables = nuevoConIdentidad[0].length - nuevoConIdentidad.length;
-  let a = 1,b = 1, c =1;
-  let barra = Array.from({length:nuevoConIdentidad[0].length + 1}, (i,j) => {
-      return j < variables ? `X${a++}` : (j == nuevoConIdentidad[0].length-1 ? '=' : ( j == nuevoConIdentidad[0].length ? 'R' : `S${b++}`));
+  let a = 1, b = 1, c = 1;
+  if (barra == undefined) {barra = Array.from({ length: nuevoConIdentidad[0].length + 1 }, (i, j) => {
+    return j < variables ? `X${a++}` : (j == nuevoConIdentidad[0].length - 1 ? '=' : (j == nuevoConIdentidad[0].length ? 'R' : `S${b++}`));
   })
   barra.unshift(' ')
-  let lado = Array.from({length:variables}, (i,j) => {return j == 0? "Z" : `S${c++}`})
+  }
+
+  if(lado == undefined) { lado = Array.from({ length: nuevoConIdentidad.length }, (i, j) => { return j == 0 ? "Z" : `S${c++}` })
+  // console.log(undefined)
+  }
+
+  if (filas != undefined) {
+    // temp[columna+1][0] = temp[0][fila+1]
+    lado[columna] = barra[filas+1]
+  }
   // let temp = structuredClone(nuevoConIdentidad);
   // console.log("variables",variables, nuevoConIdentidad[0].length)
   // console.log(lado)
@@ -110,24 +120,25 @@ const fomateo = (nuevoConIdentidad) => {
   let temp = structuredClone(nuevoConIdentidad)
   temp = temp.map((fila, i) => {
     let colita = fila[fila.length - 1];
-        let nuevafila = fila.slice(0, -1);
-      nuevafila = nuevafila.concat('=');
-      nuevafila.push(colita)
-      nuevafila.unshift(lado[i])
-      return nuevafila;
+    let nuevafila = fila.slice(0, -1);
+    nuevafila = nuevafila.concat('=');
+    nuevafila.push(colita)
+    nuevafila.unshift(lado[i])
+    return nuevafila;
   })
   temp.unshift(barra)
   // console.log("temp",temp)
+  
   return temp
 }
 const operaciones = (nuevo, signos, matrix, min) => {
   const pasos = [];
-  nuevo = nuevo.map((fila, index) => {
-    if (index === 0) {
-      return fila;
-    }
-    return fila.map((e) => (e >= 0 ? e : Math.abs(e)));
-  });
+  // nuevo = nuevo.map((fila, index) => {
+  //   if (index === 0) {
+  //     return fila;
+  //   }
+  //   return fila.map((e) => (e >= 0 ? e : Math.abs(e)));
+  // });
 
   // pasos.push(structuredClone(nuevo))
   let nuevoConIdentidad = tipo(nuevo)
@@ -163,7 +174,7 @@ const operaciones = (nuevo, signos, matrix, min) => {
             nuevoConIdentidad[pivot][i] = parseFloat(nuevoConIdentidad[pivot][i].toFixed(2));
           }
         }
-        pasos.push(structuredClone(fomateo(nuevoConIdentidad)));
+        pasos.push(structuredClone(fomateo(nuevoConIdentidad, pivote, pivot)));
 
         // restaurando cambios a la copia de fila pivot
         realpivot = [...nuevoConIdentidad[pivot]];
@@ -172,7 +183,7 @@ const operaciones = (nuevo, signos, matrix, min) => {
         for (let i = 0; i < nuevoConIdentidad[0].length; i++) {
           nuevoConIdentidad[0][i] = nuevoConIdentidad[0][i] + (realpivot[i] * (sumaresta));
         }
-        pasos.push(structuredClone(fomateo(nuevoConIdentidad)));
+        pasos.push(structuredClone(fomateo(nuevoConIdentidad,  pivote, pivot)));
         // limpiando la columna pivote
         for (let i = 1; i < nuevoConIdentidad.length; i++) {
           let a = nuevoConIdentidad[i][pivote];
@@ -182,7 +193,7 @@ const operaciones = (nuevo, signos, matrix, min) => {
             }
           }
         }
-        pasos.push(structuredClone(fomateo(nuevoConIdentidad)));
+        pasos.push(structuredClone(fomateo(nuevoConIdentidad, pivote, pivot)));
       } else {
         negativos = false
       }
@@ -226,8 +237,8 @@ const Proceso = () => {
   useEffect(() => {
     if (nuevo.length > 0 && signos.length > 0) {
       setMatrices(operaciones(nuevo, signos, matrix, min));
-      console.log(min)
-      setSenal(signal(signos,min))
+      // console.log(min)
+      setSenal(signal(signos, min))
     }
   }, [nuevo, signos, matrix, min]);
 
@@ -235,21 +246,34 @@ const Proceso = () => {
     <div className="proceso">
       <h1 className="titu">SOLUCION SIMPLEX</h1>
       <h2 className="subtitu" style={{ marginBottom: '17px' }}> Tipo de función: {min ? "minimización" : "maximización"}</h2>
-      <div className="matrices">{
-        senal ? (
+
+      {senal ? (
         matrices.length > 0 ? (
-          matrices.map((mat, index) => (
-            <div key={index}>
-              <h3 className="subtitu">Paso {index + 1}</h3>
-              <Tablitas matrix={mat} />
+          <>
+            <div className="matrices-simplex">
+              {
+                matrices.map((mat, index) => (
+                  <div key={index}>
+                    <h3 className="subtitu">Paso {index + 1}</h3>
+                    <Tablitas matrix={mat} />
+                  </div>
+                )
+                )}
             </div>
-          ))
+            <h2 style={{ color: 'cyan' }}> Interpretación </h2>
+            <p style={{ color: 'white' }}>
+              <br />Los resultado sería los siguientes:
+              <br /> <br/> Z = 
+              <br /> X1 = 
+              <br/> 
+            </p>
+          </>
+
         ) : (
           <h3 className="error">DATA NO ENCONTRADA</h3>
         ))
-        :  <h3 className="error">Metodo simplex no adecuado, verifique los signos de las restricciones o tipo de funcion </h3>
+        : <h3 className="error">Metodo simplex no adecuado, verifique los signos de las restricciones o tipo de funcion </h3>
       }
-      </div>
     </div>
   );
 };
