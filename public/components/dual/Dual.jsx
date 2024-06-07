@@ -4,12 +4,23 @@ import '../dual/Dual.css';
 
 // Componente Tablitas
 const Tablitas = ({ matrix }) => {
+  const formatNumber = (num) => {
+    let signos = ['<=','<','>','>=','=']
+    if (signos.includes(num)) { return num }
+    const number = parseFloat(num);
+    if (Number.isInteger(number)) {
+      return number;
+    } else {
+      return number.toFixed(2);
+    }
+    return num;
+  };
   return (
     <div className="pasos">
       {matrix.map((row, rowIndex) => (
         <div className='matrix-table' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <span className="cell" key={cellIndex}>{cell}</span>
+            <span className="cell" key={cellIndex}>{formatNumber(cell)}</span>
           ))}
         </div>
       ))}
@@ -81,7 +92,7 @@ const operacionesDual = (nuevo, signos, matrix) => {
     }
   }
 
-  pasos.push(matrix);
+  // pasos.push(matrix);
   return pasos;
 };
 

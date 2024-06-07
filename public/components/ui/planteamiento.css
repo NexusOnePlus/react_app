@@ -31,7 +31,9 @@
     margin: 10px 0px;
     color: #000
 }
-
+.hide {
+    display: none;
+}
 
 .cajaInfo {
     color: black;

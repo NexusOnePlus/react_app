@@ -12,12 +12,15 @@ const Planteamiento = (props) => {
   
   const { setMatrix } = useContext(MatrixContext); // matriz general
 
+  const {setMin} = useContext(MatrixContext);
+
   useEffect(() => {
     if (cuadros.length != restricciones || cuadros[0].length != variables){
       setCuadros(Array.from ({ length: restricciones }, () => Array.from({ length: variables }, () => '')));
     }
     setMatrix(cuadros)
-  }, [props.variables, props.restricciones]);
+    setMin(props.tipo)
+  }, [props.variables, props.restricciones, props.tipo]);
 
   const handleVariableChange = (rowIndex, colIndex, event) => {
     const nuevoCuadro = [...cuadros];
@@ -36,11 +39,16 @@ const Planteamiento = (props) => {
           {cuadros.map((variablesRestriccion, rowIndex) => (
             <div className="cajaInfo" key={rowIndex}>
               <h1 className='sub2'>
-                {rowIndex === 0 ? "Funcion Objetiva (Z ... = 0)" : `Restriccion ${rowIndex}`}
+                {rowIndex === 0 
+                ? `Funcion Objetivo `
+                : `Restriccion ${rowIndex}`}
               </h1 >
+              {rowIndex === 0 && 
+              <h1 style={{fontSize: '15px', textAlign: 'left', marginBottom: '10px'}}> Tipo de función: {props.tipo ? "minimización" : "maximización"}</h1>
+              }
               <div  >
                 {variablesRestriccion.map((variable, colIndex) => (
-                  <div key={colIndex} className="cajitas">
+                  <div key={colIndex} className={(rowIndex == 0) & (colIndex == variablesRestriccion.length-1 || colIndex == variablesRestriccion.length-2) ? 'hide' : 'cajitas' } >
                     <span className="input-title">
                       {colIndex === variablesRestriccion.length - 1 ? "Valor: " : (colIndex === variablesRestriccion.length - 2 ? "Signo:" : `X${colIndex + 1}: `)}
                     </span>
