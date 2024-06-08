@@ -203,7 +203,6 @@ const operaciones = (nuevo, signos, matrix, min) => {
   // pasos.push(matrix);
   return pasos;
 };
-
 const Proceso = () => {
   const { matrix } = useContext(MatrixContext);
   const [nuevo, setNuevo] = useState([]);
@@ -211,6 +210,7 @@ const Proceso = () => {
   const [signos, setSignos] = useState([]);
   const { min } = useContext(MatrixContext);
   const [senal, setSenal] = useState(false);
+
   const modifyMatrix = (matrix) => {
     const newMatrix = [];
     const newSignos = [];
@@ -237,10 +237,28 @@ const Proceso = () => {
   useEffect(() => {
     if (nuevo.length > 0 && signos.length > 0) {
       setMatrices(operaciones(nuevo, signos, matrix, min));
-      // console.log(min)
-      setSenal(signal(signos, min))
+      setSenal(signal(signos, min));
     }
   }, [nuevo, signos, matrix, min]);
+
+  const getVariableValues = (matrix) => {
+    const headers = matrix[0];
+    const variableValues = {};
+
+    headers.forEach((header) => {
+      if (header.startsWith('X')) {
+        variableValues[header] = 0;
+      }
+    });
+    
+    matrix.forEach(row => {
+      const variable = row[0];
+      if (variable.startsWith('X')) {
+        variableValues[variable] = row[row.length - 1];
+      }
+    });
+    return variableValues;
+  };
 
   return (
     <div className="proceso">
@@ -251,29 +269,30 @@ const Proceso = () => {
         matrices.length > 0 ? (
           <>
             <div className="matrices-simplex">
-              {
-                matrices.map((mat, index) => (
-                  <div key={index}>
-                    <h3 className="subtitu">Paso {index + 1}</h3>
-                    <Tablitas matrix={mat} />
-                  </div>
-                )
-                )}
+              {matrices.map((mat, index) => (
+                <div key={index}>
+                  <h3 className="subtitu">Paso {index + 1}</h3>
+                  <Tablitas matrix={mat} />
+                </div>
+              ))}
             </div>
             <h2 style={{ color: 'cyan' }}> Interpretación </h2>
-            <p style={{ color: 'white' }}>
-              <br />Los resultado sería los siguientes:
-              <br /> <br/> Z = 
-              <br /> X1 = 
-              <br/> 
-            </p>
+            <div style={{ color: 'white' }}>
+              <br />Los resultados serían los siguientes:
+              <br /> <br/> Z = {matrices[matrices.length - 1][1][matrices[matrices.length - 1][1].length-1]}
+              {Object.entries(getVariableValues(matrices[matrices.length - 1])).map(([variable, value]) => (
+                <div key={variable}>
+                  {variable} = {value}
+                </div>
+              ))}
+            </div>
           </>
-
         ) : (
           <h3 className="error">DATA NO ENCONTRADA</h3>
-        ))
-        : <h3 className="error">Metodo simplex no adecuado, verifique los signos de las restricciones o tipo de funcion </h3>
-      }
+        )
+      ) : (
+        <h3 className="error">Metodo simplex no adecuado, verifique los signos de las restricciones o tipo de funcion</h3>
+      )}
     </div>
   );
 };

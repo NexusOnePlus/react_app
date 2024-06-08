@@ -129,6 +129,22 @@ const Grafico = () => {
         elindmayor = [pasos[j][0], pasos[j][1]]
       }
     }
+     {
+      let a = objective[0] * 0 + objective[1] * pointsy;
+      let b = objective[0] * pointsx + objective[1] * 0
+      // console.log(a)
+      if (a > mayor) {
+        mayor = a;
+        elindmayor = [0, pointsy]
+      } 
+      if (b > mayor) {
+        mayor = b;
+        elindmayor = [pointsx, 0]
+      } 
+      
+    }
+
+
     console.log(elindmayor)
     // Include the origin (0, 0) for the feasible region
     let feasiblePoints = [];
