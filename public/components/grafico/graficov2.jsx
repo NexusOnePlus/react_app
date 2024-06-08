@@ -36,21 +36,24 @@ const Grafico = () => {
     }
   }
 
-  function calculateIntersection(line1, line2) {
-    const [c1, a1, b1] = line1;
-    const [c2, a2, b2] = line2;
-    const determinant = a1 * b2 - a2 * b1;
 
-    if (determinant === 0) {
-      return null; // Las líneas son paralelas
-    }
-
-    const x = (b2 * c1 - b1 * c2) / determinant;
-    const y = (a1 * c2 - a2 * c1) / determinant;
-    return [Math.abs(x), Math.abs(y)];
-  }
 
   function JSXBoard(restrictions) {
+    let pointsy = Infinity;
+    let pointsx = Infinity;
+    function calculateIntersection(line1, line2) {
+      const [c1, a1, b1] = line1;
+      const [c2, a2, b2] = line2;
+      const determinant = a1 * b2 - a2 * b1;
+
+      if (determinant === 0) {
+        return null; // Las líneas son paralelas
+      }
+
+      const x = (b2 * c1 - b1 * c2) / determinant;
+      const y = (a1 * c2 - a2 * c1) / determinant;
+      return [parseFloat(Math.abs(x).toFixed(2)), parseFloat(Math.abs(y).toFixed(2))];
+    }
     let pasos = []
     // Crear o seleccionar el contenedor para el gráfico
     const containerId = 'aqui';
@@ -64,8 +67,7 @@ const Grafico = () => {
 
     const parsedExpressions = restrictions.map(parseExpression).filter(exp => exp !== null);
     const intersectionPoints = [];
-    let pointsy = Infinity;
-    let pointsx = Infinity;
+
     let pointsyObj = null;
     let pointsxObj = null;
 
@@ -81,9 +83,9 @@ const Grafico = () => {
         if (yIntercept >= 0) {
           const yPoint = brd.create('point', [0, yIntercept], { color: colors[index % colors.length], size: 2 });
           if (pointsy > yIntercept) {
-            pointsy = yIntercept;
+            pointsy = Math.floor(yIntercept * 100) / 100;
             pointsyObj = yPoint;
-            console.log("y", yIntercept);
+            // console.log("y", yIntercept);
           }
         }
         // console.log(pointsy);
@@ -93,7 +95,7 @@ const Grafico = () => {
         if (xIntercept >= 0) {
           const xPoint = brd.create('point', [xIntercept, 0], { color: colors[index % colors.length], size: 2 });
           if (pointsx > xIntercept) {
-            pointsx = xIntercept;
+            pointsx = Math.floor(xIntercept * 100) / 100;
             pointsxObj = xPoint;
             // console.log("x", xIntercept);
           }
@@ -101,24 +103,28 @@ const Grafico = () => {
       }
     });
 
+    console.log("Puntos", pointsx, pointsy);
     // Calculate and mark intersection points of all pairs of lines
     for (let i = 0; i < parsedExpressions.length; i++) {
       for (let j = i + 1; j < parsedExpressions.length; j++) {
         const intersection = calculateIntersection(parsedExpressions[i], parsedExpressions[j]);
-        pasos.push(intersection);
-        if (intersection && intersection[0] >= 0 && intersection[1] >= 0) {
+        if (intersection && intersection[0] >= 0 && intersection[0] <= pointsx + 0.5 && intersection[1] >= 0 && intersection[1] <= pointsy + 0.1) {
           const point = brd.create('point', intersection, { color: colors[(i + j) % colors.length], size: 3, name: `(${intersection[0].toFixed(2)}, ${intersection[1].toFixed(2)})` });
           intersectionPoints.push(point);
+          pasos.push(intersection);
           console.log(intersection)
+
         }
       }
     }
+
+
     let mayor = -Infinity
-    let elindmayor= [];
+    let elindmayor = [];
     for (let j = 0; j < pasos.length; j++) {
       let a = objective[0] * pasos[j][0] + objective[1] * pasos[j][1];
       // console.log(a)
-      if (a > mayor ){
+      if (a > mayor) {
         mayor = a;
         elindmayor = [pasos[j][0], pasos[j][1]]
       }
@@ -128,22 +134,32 @@ const Grafico = () => {
     let feasiblePoints = [];
     feasiblePoints.push(brd.create('point', [0, 0], { visible: true, size: 3, color: 'black', name: '(0,0)' }));
     if (pointsxObj) feasiblePoints.push(pointsxObj);
-    feasiblePoints.push(brd.create('point', elindmayor, { visible: true, size: 3, color: 'cyan', name: '' }));
+    if (elindmayor[0] != undefined) {
+      feasiblePoints.push(brd.create('point', elindmayor, { visible: true, size: 3, color: 'cyan', name: '' }));
+    }
     if (pointsyObj) feasiblePoints.push(pointsyObj);
     pasos.push([0, pointsy]);
     pasos.push([pointsx, 0]);
     pasos.push([0, 0]);
 
-    console.log(feasiblePoints);
+    // console.log(feasiblePoints);
 
     // Create a polygon for the feasible region
     if (feasiblePoints.length > 0) {
       brd.create('polygon', feasiblePoints, { borders: { strokeColor: 'black' }, fillColor: 'rgba(255, 255, 0, 0.5)' });
     }
-    console.log(pasos);
-    
+    // console.log(pasos);
+
     setRespuesta(mayor)
-    console.log(respuesta)
+    // console.log(respuesta)
+    pasos.forEach(paso => {
+      paso.forEach((pasoObj) => {
+        pasoObj = parseFloat(pasoObj.toFixed(2))
+        // console.log(pasoObj)
+
+      })
+    })
+
     setResults(pasos);
   }
 
@@ -155,15 +171,15 @@ const Grafico = () => {
       <div className='resultados' style={{ marginTop: '20px' }}>
         <h2>Resultados</h2>
         {results && results.map((i, index) => {
-          
+
           return (
-            <h2 
-              key={index} 
-              style={{color: (objective[0] * i[0] + objective[1] * i[1] === respuesta ? 'cyan' : null)}}>
-              {`${index + 1}. (${i[0]}, ${i[1]}) = ${objective[0]}(${i[0]}) + ${objective[1]}(${i[1]}) = ${objective[0] * i[0] + objective[1] * i[1]}`}
+            <h2
+              key={index}
+              style={{ color: (objective[0] * i[0] + objective[1] * i[1] === respuesta ? 'cyan' : null) }}>
+              {`${index + 1}. (${parseFloat(i[0].toFixed(2))}, ${parseFloat(i[1].toFixed(2))}) = ${objective[0]}(${parseFloat(i[0].toFixed(2))}) + ${objective[1]}(${parseFloat(i[1].toFixed(2))}) = ${objective[0] * parseFloat(i[0].toFixed(2)) + objective[1] * parseFloat(i[1].toFixed(2))}`}
             </h2>
           );
-          
+
         })}
       </div>
     </div>
