@@ -1,13 +1,17 @@
 .grafico {
-    /* background: rgb(54, 47, 47); */
-    background: linear-gradient(135deg, #22202053, #17141483);
+    /* background: linear-gradient(135deg, #22202053, #17141483); */
     border: 2px solid #6c65774d;
     backdrop-filter: blur(10px);
     color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-radius: 7px;
     padding: 30px 40px;
 }
 
+.grafico .aquigraf {
+    background: linear-gradient(135deg, #22202053, #17141483);
+    border-radius: 19px;
+    color: rgb(211, 206, 206);
+}
 .grafico .titulograf {
     font-size: 36px;
     text-align: center;

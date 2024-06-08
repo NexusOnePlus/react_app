@@ -3,7 +3,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Setup from './setup'
 import Simplex from "../simplex/simplex"
 import Dual from "../dual/Dual"
-import Grafico from "../grafico/grafico"
+import Grafico from "../grafico/graficov2"
 import M from "../M/M"
 import './selector.css'
 const Menu = () => {
